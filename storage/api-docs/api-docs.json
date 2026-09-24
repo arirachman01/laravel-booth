@@ -1,0 +1,291 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Photobooth API",
+        "description": "API untuk aplikasi Photobooth",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Local Development Server"
+        }
+    ],
+    "paths": {
+        "/api/frame-templates": {
+            "get": {
+                "tags": [
+                    "Frame Templates"
+                ],
+                "summary": "Get all frame templates",
+                "operationId": "7e27f8a8e5c53ab4082e768118744c65",
+                "responses": {
+                    "200": {
+                        "description": "Daftar frame berhasil diambil"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Frame Templates"
+                ],
+                "operationId": "974eb6098da6af4a0682247d51482c81",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "file"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Frame Astarte"
+                                    },
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Frame berhasil diupload"
+                    },
+                    "422": {
+                        "description": "Validasi gagal"
+                    }
+                }
+            }
+        },
+        "/api/frame-templates/{frameTemplate}": {
+            "get": {
+                "tags": [
+                    "Frame Templates"
+                ],
+                "summary": "Get frame template detail",
+                "operationId": "afc34dc905fc2e44680bf3446f31b672",
+                "parameters": [
+                    {
+                        "name": "frameTemplate",
+                        "in": "path",
+                        "description": "ID frame template",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detail frame berhasil diambil"
+                    },
+                    "404": {
+                        "description": "Frame tidak ditemukan"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Frame Templates"
+                ],
+                "summary": "Update frame template",
+                "description": "Gunakan POST dengan multipart/form-data agar dapat mengirim file baru.",
+                "operationId": "da700594fb452abfa4140f909ca7a76b",
+                "parameters": [
+                    {
+                        "name": "frameTemplate",
+                        "in": "path",
+                        "description": "ID frame template",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Frame Astarte Updated"
+                                    },
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Frame berhasil diupdate"
+                    },
+                    "404": {
+                        "description": "Frame tidak ditemukan"
+                    },
+                    "422": {
+                        "description": "Validasi gagal"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Frame Templates"
+                ],
+                "summary": "Delete frame template",
+                "operationId": "7ee79d435a4bddacb8c4f3db11241a7b",
+                "parameters": [
+                    {
+                        "name": "frameTemplate",
+                        "in": "path",
+                        "description": "ID frame template",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Frame berhasil dihapus"
+                    },
+                    "404": {
+                        "description": "Frame tidak ditemukan"
+                    }
+                }
+            }
+        },
+        "/api/photo-sessions": {
+            "get": {
+                "tags": [
+                    "Photo Sessions"
+                ],
+                "summary": "Get all photo sessions",
+                "operationId": "6bf1d000e0f96ef02e94228b3dba86aa",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Photo Sessions"
+                ],
+                "summary": "Create photo session with photo results",
+                "operationId": "e915040f8deae1bbbe5be84380835b90",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "session_id",
+                                    "files"
+                                ],
+                                "properties": {
+                                    "session_id": {
+                                        "type": "string",
+                                        "example": "SESSION-001"
+                                    },
+                                    "files": {
+                                        "description": "Photo files",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        },
+                                        "minItems": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Session and photo results created"
+                    }
+                }
+            }
+        },
+        "/api/photo-sessions/{sessionId}": {
+            "get": {
+                "tags": [
+                    "Photo Sessions"
+                ],
+                "summary": "Get photo session detail",
+                "operationId": "7ed293900f441249a88bfa726c6ff7eb",
+                "parameters": [
+                    {
+                        "name": "sessionId",
+                        "in": "path",
+                        "description": "Session ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "sesi-f6bc95dc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Session not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Photo Sessions"
+                ],
+                "summary": "Delete photo session",
+                "operationId": "03278938ce7ef3532162e3c211e5a56c",
+                "parameters": [
+                    {
+                        "name": "sessionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Session deleted"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Frame Templates",
+            "description": "Frame Templates"
+        },
+        {
+            "name": "Photo Sessions",
+            "description": "Photo Sessions"
+        }
+    ]
+}
