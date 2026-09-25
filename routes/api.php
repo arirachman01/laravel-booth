@@ -3,6 +3,11 @@
 use App\Http\Controllers\FrameTemplateController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PhotoSessionController;
+use App\Http\Controllers\SettingController;
+
+Route::prefix('setting')->group(function () {
+    Route::get('/', [SettingController::class, 'view']);
+});
 
 Route::prefix('frame-templates')->group(function () {
     Route::get('/', [FrameTemplateController::class, 'index']);
@@ -31,3 +36,4 @@ Route::prefix('photo-sessions')->group(function () {
         'destroy'
     ]);
 });
+

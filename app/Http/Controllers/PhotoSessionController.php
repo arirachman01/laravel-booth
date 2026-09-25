@@ -10,8 +10,15 @@ use OpenApi\Attributes as OA;
 
 class PhotoSessionController extends Controller
 {
-    public function view(Request $request){
-        return view('upload');
+    public function view()
+    {
+        $sessionId = request('session_id');
+
+        $session = PhotoSession::with('results')
+            ->where('session_id', $sessionId)
+            ->firstOrFail();
+
+        return view('results', compact('session'));
     }
 
     #[OA\Get(
